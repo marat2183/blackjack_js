@@ -1,0 +1,131 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.content {
+    min-height: 100vh;
+    padding: 100px 0;
+}
+
+.content__wrapper{
+    width: calc(100% - 30px);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.play-table{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    width: 100%;
+    height: 300px;
+    background-color: #225737;
+    border-radius: 300px / 100px;
+}
+
+.play-table__crupier{
+    position: absolute;
+    top: -50px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.play-table__crupier-img{
+    width: 50px;
+    height: 50px;
+}
+.play-table__crupier-cards{
+    margin-top: 5px;
+    display: flex;
+}
+.card{
+    display: flex;
+    flex-direction: column;
+    padding: 1px 5px;
+    margin-left: 10px;
+    height: 80px;
+    width: 50px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    margin-left: -34px;
+    z-index: 0;
+    border: 1px solid rgba(0,0,0,.5);
+}
+.card:first-of-type{
+    margin-left: 0;
+}
+.card__type{
+    margin: 0 auto;
+    width: 17px;
+    height: 17px;
+}
+
+.card__top{
+    display: flex;
+    flex-direction: column;
+}
+.card__bottom{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transform: rotate(180deg);
+}
+.card__top-value, .card__bottom-value{
+    font-weight: 500;
+}
+.card__top-type, .card__bottom-type{
+    width: 10px;
+    height: 10px;
+}
+.card__bottom-value--black, .card__top-value--black{
+    color: #000;
+}
+
+.card__bottom-value--red, .card__top-value--red{
+    color: #d40000
+}
+.player-table__cards{
+    width: 80px;
+    position: absolute;
+    right: 0;
+    top: 85px;
+}
+.player-table__deck-card{
+    display: block;
+    width: 50px;
+    height: 75px;
+    margin-top: -74.5px;
+}
+
+.player-table__deck-card:first-of-type{
+    margin-top: 0;
+}
+
+.play-table__players{
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    margin-top: auto;
+    bottom: -37px;
+}
+.player{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.player__img{
+    margin-top: 3px;
+    width: 50px;
+    height: 50px;
+}
+.player__cards{
+    display: flex;
+}
