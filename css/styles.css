@@ -78,8 +78,8 @@
 .player-table__deck-card{
     display: block;
     width: 50px;
-    height: 75px;
-    margin-top: -74.5px;
+    height: 80px;
+    margin-top: -79.5px;
 }
 
 .player-table__deck-card:first-of-type{
@@ -142,7 +142,7 @@
     border-radius: 5px;
     background-color: #ffffff;
     margin-left: -34px;
-    z-index: 0;
+    z-index: 1;
     border: 1px solid rgba(0,0,0,.5);
 }
 
@@ -193,3 +193,8 @@
     transform: rotate(180deg);
 }
 
+.card--default{
+    background-image: url('../img/card.svg');
+    background-size: cover;
+    z-index: 0;
+}
