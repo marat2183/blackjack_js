@@ -8,6 +8,7 @@
 .content {
     min-height: 100vh;
     padding: 100px 0;
+    background-color: #41B3A3;
 }
 
 .content__wrapper{
@@ -25,78 +26,55 @@
     width: 100%;
     height: 300px;
     background-color: #225737;
-    border-radius: 300px / 100px;
+    border-radius: 300px / 50px;
 }
 
-.play-table__crupier{
+.crupier{
     position: absolute;
     top: -50px;
     width: 100%;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 }
 
-.play-table__crupier-img{
+.crupier__img{
     width: 50px;
     height: 50px;
 }
-.play-table__crupier-cards{
+
+.crupier__cards{
     margin-top: 5px;
     display: flex;
-}
-.card{
-    display: flex;
-    flex-direction: column;
-    padding: 1px 5px;
-    margin-left: 10px;
-    height: 80px;
-    width: 50px;
-    border-radius: 5px;
-    background-color: #ffffff;
-    margin-left: -34px;
-    z-index: 0;
-    border: 1px solid rgba(0,0,0,.5);
-}
-.card:first-of-type{
-    margin-left: 0;
-}
-.card__type{
-    margin: 0 auto;
-    width: 17px;
-    height: 17px;
+    flex: 100%;
+    justify-content: center;
 }
 
-.card__top{
-    display: flex;
-    flex-direction: column;
+.crupier__points{
+    position: relative;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 1px solid #000;
+    background-color: #7a1212;
 }
-.card__bottom{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    transform: rotate(180deg);
-}
-.card__top-value, .card__bottom-value{
-    font-weight: 500;
-}
-.card__top-type, .card__bottom-type{
-    width: 10px;
-    height: 10px;
-}
-.card__bottom-value--black, .card__top-value--black{
-    color: #000;
+.crupier__points-value{
+    font-size: 15px;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-.card__bottom-value--red, .card__top-value--red{
-    color: #d40000
-}
-.player-table__cards{
+.player-table__cards-deck{
     width: 80px;
     position: absolute;
     right: 0;
     top: 85px;
 }
+
 .player-table__deck-card{
     display: block;
     width: 50px;
@@ -115,10 +93,12 @@
     margin-top: auto;
     bottom: -37px;
 }
+
 .player{
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .player__img{
@@ -126,6 +106,90 @@
     width: 50px;
     height: 50px;
 }
+
+.player__points{
+    position: relative;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 1px solid #000;
+    background-color: #7a1212;
+}
+.player__points-value{
+    font-size: 15px;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 .player__cards{
     display: flex;
+    justify-content: center;
+    flex: 100%;
 }
+.player__name{
+    text-align: center;
+    flex: 100%;
+}
+.card{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    height: 80px;
+    width: 50px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    margin-left: -34px;
+    z-index: 0;
+    border: 1px solid rgba(0,0,0,.5);
+}
+
+.card:first-of-type{
+    margin-left: 0;
+}
+
+.card__value{
+    position: absolute;
+    font-weight: 600;
+}
+
+.card__value--top{
+    top: 1px;
+    left: 5px;
+
+}
+
+.card__value--bottom{
+    right: 5px;
+    bottom: 1px;
+    transform: rotate(180deg);
+}
+
+.card__type{
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 15px;
+    top: 30px;
+
+}
+
+.card__type--top{
+    width: 10px;
+    height: 10px;
+    left: 5px;
+    top: 21px;
+}
+
+.card__type--bottom{
+    width: 10px;
+    height: 10px;
+    right: 5px;
+    bottom: 21px;
+    left: auto;
+    top: auto;
+    transform: rotate(180deg);
+}
+
