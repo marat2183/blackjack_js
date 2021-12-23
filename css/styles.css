@@ -206,7 +206,12 @@
     border-radius: 50%;
     border: 6px solid #fff;
     border-style: dashed;
-    margin: 10px 0 0 15px
+    margin: 10px 0 0 15px;
+    transition: 0.2s all;
+}
+
+.chip:hover{
+    transform: scale(1.25);
 }
 
 .chip--10{
