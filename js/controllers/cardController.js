@@ -31,28 +31,15 @@ const CardController = class {
     }
 
     createCardImgs = (card) => {
-        let imgsSource = ''
-        if (card.type === 'club'){
-            imgsSource = './img/clubs.svg'
-        }
-        else if (card.type === 'hearts'){
-            imgsSource = './img/hearts.svg'
-        }
-        else if (card.type === 'pique'){
-            imgsSource = './img/pique.svg'
-        }
-        else{
-            imgsSource = './img/diamonds.svg'
-        }
         const topImg = document.createElement('img')
         topImg.classList.add('card__type', 'card__type--top');
-        topImg.setAttribute('src', imgsSource);
+        topImg.setAttribute('src', `./img/${card.type}.svg`);
         const mainImg = document.createElement('img')
         mainImg.classList.add('card__type');
-        mainImg.setAttribute('src', imgsSource);
+        mainImg.setAttribute('src', `./img/${card.type}.svg`);
         const bottomImg = document.createElement('img')
         bottomImg.classList.add('card__type', 'card__type--bottom');
-        bottomImg.setAttribute('src', imgsSource);
+        bottomImg.setAttribute('src', `./img/${card.type}.svg`);
         return [topImg, mainImg, bottomImg]
     }
 }

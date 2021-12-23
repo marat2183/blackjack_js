@@ -2,6 +2,7 @@ import cardList from '../constansts.js';
 
 
 const CardService = class {
+    
     constructor(){
         this.numberOfCards = 52;
         this.cardList = cardList;
