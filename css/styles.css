@@ -136,7 +136,6 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    margin-left: 10px;
     height: 80px;
     width: 50px;
     border-radius: 5px;
@@ -208,7 +207,6 @@
     font-weight: 500;
     border-radius: 5px;
 }
-
 
 .player__btn--hit{
     color: #fff;
