@@ -4,8 +4,8 @@ import CardController from "./cardController.js";
 
 const PlayerController = class{
     constructor(hitBtn, stopBtn, playerCardsPoints, cardList){
-        this.PlayerService = new PlayerService();
-        this.CardController = new CardController()
+        this.playerService = new PlayerService();
+        this.cardController = new CardController()
         this.hitBtn = hitBtn;
         this.stopBtn = stopBtn;
         this.playerCardsPoints = playerCardsPoints;
@@ -15,7 +15,7 @@ const PlayerController = class{
 
     addBtnsHandlers = () => {
         this.hitBtn.addEventListener('click', () => {
-            this.PlayerService.getCards(1);
+            this.playerService.getCards(1);
             this.renderPlayerSection()
         });
 
@@ -35,7 +35,6 @@ const PlayerController = class{
     }
 
     changePlayerSectionView = (cards, points) => {
-        console.log(cards, points)
         if (cards.length >= 2 && points !== 21){
             this.playerCardsPoints.textContent = points;
             this.showPlayerBtns();
@@ -54,12 +53,12 @@ const PlayerController = class{
     }
     
     renderPlayerSection = () => {
-        const cards = this.PlayerService.getPlayerCards()
-        const cardsBlock = cards.map(card => this.CardController.createCard(card));
+        const cards = this.playerService.getPlayerCards()
+        const cardsBlock = cards.map(card => this.cardController.createCard(card));
         this.cardList.innerHTML = ''
         this.cardList.append(...cardsBlock);
         try{
-            const points = this.PlayerService.getPlayerPoints()
+            const points = this.playerService.getPlayerPoints()
             this.changePlayerSectionView(cards, points)
         }
         catch{
@@ -76,5 +75,5 @@ const playerCardsPoints = document.querySelector('.player__points-value');
 const cardList = document.querySelector('.player__cards')
 
 const controller = new PlayerController(hitBtn, stopBtn, playerCardsPoints, cardList)
-controller.PlayerService.getCards(2);
+controller.playerService.getCards(2);
 controller.renderPlayerSection()

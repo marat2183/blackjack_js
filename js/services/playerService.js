@@ -4,7 +4,7 @@ import CardService from './cardService.js'
 const PlayerService = class{
     constructor(){
         this.hand = []
-        this.CardService = new CardService()
+        this.cardService = new CardService()
         this.points = 0
     }
 
@@ -20,7 +20,7 @@ const PlayerService = class{
     }
 
     getCards = (num) => {
-        const cards = this.CardService.get(num);
+        const cards = this.cardService.get(num);
         this.updateCards(cards);
         this.updatePoints(cards);
     }
@@ -30,7 +30,7 @@ const PlayerService = class{
     }
     
     updatePoints = () => {
-        const updatedPoints = this.CardService.getSumPoints(this.hand)
+        const updatedPoints = this.cardService.getSumPoints(this.hand)
         this.points = updatedPoints;
     }
 

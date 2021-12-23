@@ -1,36 +1,34 @@
-import CardService from '../services/cardService.js'
-
 
 const CardController = class {
     constructor(){
-        this.service = new CardService();
+        
     }
 
     createCard = (card) => {
         const cardBlock = document.createElement('div');
         cardBlock.classList.add('card');
-        const cardTopSpan = this.createCardTopSpan(card);
-        const cardBottomSpan = this.createCardBottomSpan(card);
-        const cardImgs = this.createCardImgs(card);
+        const cardTopSpan = this.#createCardTopSpan(card);
+        const cardBottomSpan = this.#createCardBottomSpan(card);
+        const cardImgs = this.#createCardImgs(card);
         cardBlock.append(cardTopSpan, ...cardImgs, cardBottomSpan)
         return cardBlock;
     }
     
-    createCardTopSpan = (card) => {
+    #createCardTopSpan = (card) => {
         const cardSpan = document.createElement('span');
         cardSpan.classList.add('card__value', 'card__value--top')
         cardSpan.textContent = card.value;
         return cardSpan;
     }
 
-    createCardBottomSpan = (card) => {
+    #createCardBottomSpan = (card) => {
         const cardSpan = document.createElement('span');
         cardSpan.classList.add('card__value', 'card__value--bottom')
         cardSpan.textContent = card.value;
         return cardSpan;
     }
 
-    createCardImgs = (card) => {
+    #createCardImgs = (card) => {
         const topImg = document.createElement('img')
         topImg.classList.add('card__type', 'card__type--top');
         topImg.setAttribute('src', `./img/${card.type}.svg`);
