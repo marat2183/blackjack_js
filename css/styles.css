@@ -7,142 +7,120 @@
 
 .content {
     min-height: 100vh;
-    padding: 100px 0;
-    background-color: #41B3A3;
+    height: 100%;
+    padding: 50px 0;
+    background-color: #11302a;
 }
 
 .content__wrapper{
     width: calc(100% - 30px);
     max-width: 800px;
     margin: 0 auto;
-}
-
-.play-table{
-    position: relative;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    padding: 10px 0;
+
+}
+
+.player-table{
     width: 100%;
-    height: 300px;
-    background-color: #225737;
-    border-radius: 300px / 50px;
-}
-
-.crupier{
-    position: absolute;
-    top: -50px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.crupier__img{
-    width: 50px;
-    height: 50px;
-}
-
-.crupier__cards{
-    margin-top: 5px;
-    display: flex;
-    flex: 100%;
-    justify-content: center;
-}
-
-.crupier__points{
-    position: relative;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    border: 1px solid #000;
-    background-color: #7a1212;
-}
-.crupier__points-value{
-    font-size: 15px;
-    color: #fff;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.player-table__cards-deck{
-    width: 80px;
-    position: absolute;
-    right: 0;
-    top: 85px;
-}
-
-.player-table__deck-card{
-    display: block;
-    width: 50px;
-    height: 80px;
-    margin-top: -79.5px;
-}
-
-.player-table__deck-card:first-of-type{
-    margin-top: 0;
-}
-
-.play-table__players{
-    display: flex;
-    justify-content: space-between;
-    position: absolute;
-    margin-top: auto;
-    bottom: -37px;
+    flex: 2;
 }
 
 .player{
+    margin-top: 15px;
     display: flex;
     justify-content: center;
-    align-items: center;
     flex-wrap: wrap;
+    align-items: center;
+}
+
+.player__title{
+    flex: 100%;
+    text-align: center;
+    margin-top: 10px;
+    color: #fff;
 }
 
 .player__img{
-    margin-top: 3px;
+    margin-top: 10px;
     width: 50px;
     height: 50px;
 }
 
-.player__points{
+.points{
+    margin: 10px 0 0 10px;
     position: relative;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    border: 1px solid #000;
-    background-color: #7a1212;
-}
-.player__points-value{
-    font-size: 15px;
-    color: #fff;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-.player__cards{
+    width: 50px;
+    height: 45px;
+    background-color: #000;
     display: flex;
     justify-content: center;
-    flex: 100%;
+    align-items: center;
 }
-.player__name{
-    text-align: center;
-    flex: 100%;
+
+.points__value{
+    font-size: 20px;
+    color: #fff;
 }
+
+.player__cards{
+    margin-top: 15px;
+    flex: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.player__buttons{
+    margin-top: 10px;
+}
+
+.player__btn{
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    color: #fff;
+    width: 100px;
+    height: 40px;
+    cursor: pointer;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: 1s all;
+}
+
+.player__btn--hit{
+    background-color: #225737;
+    display: none;
+}
+
+.player__btn--hit:hover{
+    background-color: rgba(34, 87, 55, .5);
+}
+
+.player__btn--stand{
+    background-color: #7a1212;
+    margin-left: 10px;
+    display: none;
+}
+
+.player__btn--stand:hover{
+    background-color: rgba(122, 18, 18, .5);
+}
+
 .card{
     position: relative;
     display: flex;
     flex-direction: column;
-    height: 80px;
-    width: 50px;
-    border-radius: 5px;
+    height: 120px;
+    width: 80px;
+    border-radius: 10px;
     background-color: #ffffff;
-    margin-left: -34px;
+    margin-left: -60px;
     z-index: 1;
     border: 1px solid rgba(0,0,0,.5);
+}
+
+.card:hover{
+    bottom: 10px;
 }
 
 .card:first-of-type{
@@ -150,41 +128,42 @@
 }
 
 .card__value{
+    font-size: 17px;
     position: absolute;
     font-weight: 600;
 }
 
 .card__value--top{
     top: 1px;
-    left: 5px;
+    left: 7px;
 
 }
 
 .card__value--bottom{
-    right: 5px;
+    right: 7px;
     bottom: 1px;
     transform: rotate(180deg);
 }
 
 .card__type{
     position: absolute;
-    width: 16px;
-    height: 16px;
-    left: 15px;
-    top: 30px;
+    width: 25px;
+    height: 25px;
+    left: 25px;
+    top: 45px;
 
 }
 
 .card__type--top{
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
     left: 5px;
     top: 21px;
 }
 
 .card__type--bottom{
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
     right: 5px;
     bottom: 21px;
     left: auto;
@@ -198,24 +177,121 @@
     z-index: 0;
 }
 
-.player__btn{
-    width: 65px;
-    height: 35px;
-    border: none;
-    outline: none;
+.bets{
+    width: 100%;
+    flex: 1;
+    max-width: 300px;
+}
+
+.chips-list{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.chip{
     cursor: pointer;
-    font-weight: 500;
-    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 6px solid #fff;
+    border-style: dashed;
+    margin: 10px 0 0 15px
 }
 
-.player__btn--hit{
-    color: #fff;
-    background-color: #225737;
-    display: none;
+.chip--10{
+    background-color: #d60438;
 }
 
-.player__btn--stop{
+.chip--50{
+    background-color: #d60438;
+}
+
+.chip--100{
+    background-color: #146694;
+}
+
+.chip--200{
+    background-color: #1f513b;
+}
+
+.chip--500{
+    background-color: #ffa611;
+}
+
+.chip--1k{
+    background-color: #000;
+}
+
+.chip--5k{
+    background-color: #7f7f7f;
+}
+
+.chip--10k{
+    background-color: #ff5f13;
+}
+
+.chip__value{
     color: #fff;
-    background-color: #d40000;
-    display: none;
+    font-weight: 600;
+}
+
+.bets__title{
+    margin-top: 10px;
+    color: #fff;
+}
+
+.bets__title:first-of-type{
+    margin-top: 25px;
+}
+
+.bets__buttons{
+    margin-top: 10px;
+}
+
+.bet_button{
+    outline: none;
+    border: none;
+    width: 100%;
+    height: 40px;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 600;
+    transition: 1s all;
+}
+
+.bet_button--bet{
+    background-color: #146694;    
+}
+
+.bet_button--bet:hover{
+    background-color: rgba(20, 102, 148, .6);
+}
+
+.bet_button--bet:disabled{
+    background-color: #d2defc;
+}
+
+
+.bet_button--reset{
+    margin-top: 10px;
+    background-color: #d60438;
+}
+
+.bet_button--reset:hover{
+    background-color: rgba(214, 4, 56, .6);
+}
+
+.bet_button--reset:disabled{
+    background-color: #d2defc;
+}
+
+@media (max-width: 768px){
+    .content__wrapper{
+        flex-direction: column-reverse;
+    }
 }

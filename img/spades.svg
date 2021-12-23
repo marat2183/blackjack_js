@@ -1,22 +1,49 @@
-<?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
- "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
-<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
- width="100px" height="50px" viewBox="0 0 1280.000000 640.000000"
- preserveAspectRatio="xMidYMid meet">
-<metadata>
-Created by potrace 1.15, written by Peter Selinger 2001-2017
-</metadata>
-<g transform="translate(0.000000,640.000000) scale(0.100000,-0.100000)"
-fill="#000000" stroke="none">
-<path d="M1357 4707 c-16 -162 -88 -346 -203 -517 -112 -167 -217 -286 -629
--710 -297 -306 -426 -483 -489 -673 -85 -254 14 -570 232 -742 123 -98 266
--148 422 -149 115 0 194 19 309 75 100 49 219 160 271 252 18 32 34 56 36 54
-2 -2 -8 -34 -21 -73 -87 -241 -237 -416 -439 -514 -91 -44 -212 -80 -268 -80
--20 0 -39 -3 -41 -7 -3 -5 372 -8 833 -8 461 0 837 1 835 3 -1 2 -32 7 -69 13
--80 11 -168 40 -261 86 -197 98 -342 265 -430 499 -35 92 -31 99 12 25 132
--222 411 -359 658 -322 169 25 294 90 412 214 116 122 179 269 190 438 19 305
--105 511 -627 1044 -146 148 -298 307 -338 352 -237 272 -357 507 -381 748
-l-7 70 -7 -78z"/>
-</g>
+<?xml version="1.0"?>
+<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:svg="http://www.w3.org/2000/svg" id="svg3297" viewBox="0 0 40 40" version="1.0">
+  <g id="layer1">
+    <path id="path3295" d="m9.9958 40c7.2112-1.603 7.9872-5.826 8.5312-13.594-1.253 2.075-3.531 3.607-7.25 3.594-6.1124-0.021-10.207-3.576-8.75-11.25 1.4688-7.737 12.469-10.737 17.469-18.75 5 8.0128 16 11.013 17.469 18.75 1.456 7.674-2.469 11.228-8.75 11.25-3.719 0.013-5.997-1.519-7.25-3.594 0.544 7.768 1.319 11.991 8.531 13.594h-20z"/>
+  </g>
+  <metadata>
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <cc:license rdf:resource="http://creativecommons.org/licenses/publicdomain/"/>
+        <dc:publisher>
+          <cc:Agent rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>card_pique</dc:title>
+        <dc:date>2007-08-22T07:17:22</dc:date>
+        <dc:description>card, card, clip art, clipart, game, game, image, media, png, public domain, shape, shape, sign, sign, svg, </dc:description>
+        <dc:source>http://openclipart.org/detail/4933/card_pique-by-jean_victor_balin</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>jean_victor_balin</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>card</rdf:li>
+            <rdf:li>clip art</rdf:li>
+            <rdf:li>clipart</rdf:li>
+            <rdf:li>game</rdf:li>
+            <rdf:li>image</rdf:li>
+            <rdf:li>media</rdf:li>
+            <rdf:li>png</rdf:li>
+            <rdf:li>public domain</rdf:li>
+            <rdf:li>shape</rdf:li>
+            <rdf:li>sign</rdf:li>
+            <rdf:li>svg</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License rdf:about="http://creativecommons.org/licenses/publicdomain/">
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks"/>
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
 </svg>

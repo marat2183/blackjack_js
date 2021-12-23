@@ -1,131 +1,131 @@
 const cardList = [
     {
-        "type": "club",
+        "type": "clubs",
         "value": "2",
         "points": 2
     },
     {
-        "type": "club",
+        "type": "clubs",
         "value": "3",
         "points": 3
     },
     {
-        "type": "club",
+        "type": "clubs",
         "value": "4",
         "points": 4
     },
     {
-        "type": "club",
+        "type": "clubs",
         "value": "5",
         "points": 5
     },
     {
-        "type": "club",
+        "type": "clubs",
         "value": "6",
         "points": 6
     },
     {
-        "type": "club",
+        "type": "clubs",
         "value": "7",
         "points": 7
     },
     {
-        "type": "club",
+        "type": "clubs",
         "value": "8",
         "points": 8
     },
     {
-        "type": "club",
+        "type": "clubs",
         "value": "9",
         "points": 9
     },
     {
-        "type": "club",
+        "type": "clubs",
         "value": "10",
         "points": 10
     },
     {
-        "type": "club",
+        "type": "clubs",
         "value": "J",
         "points": 10
     },
     {
-        "type": "club",
+        "type": "clubs",
         "value": "Q",
         "points": 10
     },
     {
-        "type": "club",
+        "type": "clubs",
         "value": "K",
         "points": 10
     },
     {
-        "type": "club",
+        "type": "clubs",
         "value": "A",
         "points": 11
     },
     {
-        "type": "diamond",
+        "type": "diamonds",
         "value": "2",
         "points": 2
     },
     {
-        "type": "diamond",
+        "type": "diamonds",
         "value": "3",
         "points": 3
     },
     {
-        "type": "diamond",
+        "type": "diamonds",
         "value": "4",
         "points": 4
     },
     {
-        "type": "diamond",
+        "type": "diamonds",
         "value": "5",
         "points": 5
     },
     {
-        "type": "diamond",
+        "type": "diamonds",
         "value": "6",
         "points": 6
     },
     {
-        "type": "diamond",
+        "type": "diamonds",
         "value": "7",
         "points": 7
     },
     {
-        "type": "diamond",
+        "type": "diamonds",
         "value": "8",
         "points": 8
     },
     {
-        "type": "diamond",
+        "type": "diamonds",
         "value": "9",
         "points": 9
     },
     {
-        "type": "diamond",
+        "type": "diamonds",
         "value": "10",
         "points": 10
     },
     {
-        "type": "diamond",
+        "type": "diamonds",
         "value": "J",
         "points": 10
     },
     {
-        "type": "diamond",
+        "type": "diamonds",
         "value": "Q",
         "points": 10
     },
     {
-        "type": "diamond",
+        "type": "diamonds",
         "value": "K",
         "points": 10
     },
     {
-        "type": "diamond",
+        "type": "diamonds",
         "value": "A",
         "points": 11
     },
@@ -195,67 +195,67 @@ const cardList = [
         "points": 11
     },
     {
-        "type": "pique",
+        "type": "spades",
         "value": "2",
         "points": 2
     },
     {
-        "type": "pique",
+        "type": "spades",
         "value": "3",
         "points": 3
     },
     {
-        "type": "pique",
+        "type": "spades",
         "value": "4",
         "points": 4
     },
     {
-        "type": "pique",
+        "type": "spades",
         "value": "5",
         "points": 5
     },
     {
-        "type": "pique",
+        "type": "spades",
         "value": "6",
         "points": 6
     },
     {
-        "type": "pique",
+        "type": "spades",
         "value": "7",
         "points": 7
     },
     {
-        "type": "pique",
+        "type": "spades",
         "value": "8",
         "points": 8
     },
     {
-        "type": "pique",
+        "type": "spades",
         "value": "9",
         "points": 9
     },
     {
-        "type": "pique",
+        "type": "spades",
         "value": "10",
         "points": 10
     },
     {
-        "type": "pique",
+        "type": "spades",
         "value": "J",
         "points": 10
     },
     {
-        "type": "pique",
+        "type": "spades",
         "value": "Q",
         "points": 10
     },
     {
-        "type": "pique",
+        "type": "spades",
         "value": "K",
         "points": 10
     },
     {
-        "type": "pique",
+        "type": "spades",
         "value": "A",
         "points": 11
     },
