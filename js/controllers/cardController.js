@@ -55,20 +55,6 @@ const CardController = class {
         bottomImg.setAttribute('src', imgsSource);
         return [topImg, mainImg, bottomImg]
     }
-
-    renderPlayerSection = () => {
-        // const cards = this.service.get(3);
-        // const cardPoints = this.service.getSumPoints(cards);
-        // const cardsBlock = cards.map(card => this.createCard(card));
-        // const cardList = document.querySelector('.player__cards')
-        // cardList.innerHTML = ''
-        // cardList.append(...cardsBlock)
-        // const playerCardsPoints = document.querySelector('.player__points-value');
-        // playerCardsPoints.textContent = cardPoints;
-    };
 }
-
-const controller = new CardController()
-controller.renderPlayerSection();
 
 export default CardController;

@@ -8,25 +8,35 @@ const PlayerService = class{
         this.points = 0
     }
 
-    getCardsList = () => this.hand
+    getPlayerCards = () => {
+        return this.hand
+    }
 
-    get = (num) => this.CardService.get(num)
+    getPlayerPoints = () => {
+        if (this.points <= 21){
+            return this.points
+        }
+        throw new Error("Points more then 21")
+    }
+
+    getCards = (num) => {
+        const cards = this.CardService.get(num);
+        this.updateCards(cards);
+        this.updatePoints(cards);
+    }
     
-    calcCardsPoints = (cards) => this.CardService.getSumPoints(cards)
-
-    updateCards = () => {
-        const card = this.CardService.get(1);
-        this.hand = [...this.hand, card]
+    updateCards = (cards) => {
+        this.hand = [...this.hand, ...cards]
     }
     
     updatePoints = () => {
-        const cards = this.getCardsList()
-        const updatedPoints = CardService.getSumPoints(cards)
+        const updatedPoints = this.CardService.getSumPoints(this.hand)
         this.points = updatedPoints;
     }
 
     resetHand = () => {
         this.hand = [];
+        this.points = 0;
     }
 }
 

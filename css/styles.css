@@ -198,3 +198,26 @@
     background-size: cover;
     z-index: 0;
 }
+
+.player__btn{
+    width: 65px;
+    height: 35px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-weight: 500;
+    border-radius: 5px;
+}
+
+
+.player__btn--hit{
+    color: #fff;
+    background-color: #225737;
+    display: none;
+}
+
+.player__btn--stop{
+    color: #fff;
+    background-color: #d40000;
+    display: none;
+}

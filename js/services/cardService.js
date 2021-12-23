@@ -24,15 +24,24 @@ const CardService = class {
     getPoints = (cardObjectList) => cardObjectList.map(card => card.points);
 
     getSumPoints(cardObjectList){
-        const cardValues = this.getCardsValues(cardObjectList)
+        const cardsValues = this.getCardsValues(cardObjectList)
         const cardsPoints = this.getPoints(cardObjectList)
-        const tempSum = cardsPoints.reduce((a,b)=>a+b)
-        if (!cardValues.includes('A')){
-            return tempSum
+        if (!cardsValues.includes('A')){
+            return cardsPoints.reduce((a,b)=>a+b)
         }
-        return tempSum <= 21 ? tempSum: tempSum - 10;
+        const filteredCardsList = cardObjectList.filter((card) => card.value !== 'A');
+        const filteredCardsPoints = this.getPoints(filteredCardsList)
+        const numOfAces = cardObjectList.length - filteredCardsList.length
+        let resultSum = filteredCardsPoints.reduce((a,b)=>a+b);
+        for (let i = 0; i < numOfAces; i++){
+            if ((resultSum + 11) <= 21){
+                resultSum = resultSum + 11
+                continue;
+            }
+            resultSum = resultSum + 1;
+        }
+        return resultSum;
     };
-   
 }
 
 export default CardService
