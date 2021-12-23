@@ -14,16 +14,20 @@ const CardController = class {
         return cardBlock;
     }
     
+    #getCardSpanColor = (card) => ['spades', 'clubs'].includes(card.type) ? 'card__value--black': 'card__value--red'
+
     #createCardTopSpan = (card) => {
+        const colorStyle = this.#getCardSpanColor(card);
         const cardSpan = document.createElement('span');
-        cardSpan.classList.add('card__value', 'card__value--top')
+        cardSpan.classList.add('card__value', 'card__value--top', colorStyle)
         cardSpan.textContent = card.value;
         return cardSpan;
     }
 
     #createCardBottomSpan = (card) => {
+        const colorStyle = this.#getCardSpanColor(card);
         const cardSpan = document.createElement('span');
-        cardSpan.classList.add('card__value', 'card__value--bottom')
+        cardSpan.classList.add('card__value', 'card__value--bottom', colorStyle)
         cardSpan.textContent = card.value;
         return cardSpan;
     }
