@@ -77,9 +77,13 @@ const PlayerController = class{
     betBtnCallback = () => {
         this.betBtn.disabled = true;
         this.resetBtn.disabled = true;
+        this.removeChipsBtnsHandlers();
     }
 
-    resetBtnCallback = () => this.playerService.resetBet();
+    resetBtnCallback = () => {
+        this.playerService.resetBet(this.playerService.getPlayerBet());
+        this.renderBetsSection();
+    }
 
     removeBetsBtnsHandlers = () => {
         this.betBtn.removeEventListener('click', this.betBtnCallback)

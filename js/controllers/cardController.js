@@ -7,6 +7,10 @@ const CardController = class {
     createCard = (card) => {
         const cardBlock = document.createElement('div');
         cardBlock.classList.add('card');
+        if (card.type === 'defaultCard'){
+            cardBlock.classList.add('card--default');
+            return cardBlock
+        }
         const cardTopSpan = this.#createCardTopSpan(card);
         const cardBottomSpan = this.#createCardBottomSpan(card);
         const cardImgs = this.#createCardImgs(card);

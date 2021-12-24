@@ -5,22 +5,37 @@ const CrupierService = class{
     
     constructor(){
         this.hand = []
-        this.CardService = new CardService()
+        this.cardService = new CardService()
         this.points = 0
     }
 
-    getCards = (num) => {
-        const cards = this.CardService.get(num);
+    getCrupierCards = () => {
+        return this.hand;
+    }
+
+    getCrupierPoints = () => {
+        if (this.points <= 21){
+            return this.points
+        }
+        throw new Error("Points more then 21")
+    }
+
+    getCards = (numberOfcards, defaultCard=false) => {
+        const cards = this.cardService.get(numberOfcards, defaultCard);
         this.updateCards(cards);
         this.updatePoints(cards);
     }
     
     updateCards = (cards) => {
+        if (this.hand.length === 2){
+            this.hand = [this.hand[0], ...cards]
+            return
+        }
         this.hand = [...this.hand, ...cards]
     }
     
     updatePoints = () => {
-        const updatedPoints = this.CardService.getSumPoints(this.hand)
+        const updatedPoints = this.cardService.getSumPoints(this.hand)
         this.points = updatedPoints;
     }
 

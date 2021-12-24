@@ -179,7 +179,7 @@
 }
 
 .card--default{
-    background-image: url('../img/card.svg');
+    background-image: url('../img/defaultCard.svg');
     background-size: cover;
     z-index: 0;
 }

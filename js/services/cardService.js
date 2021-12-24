@@ -8,7 +8,15 @@ const CardService = class {
         this.cardList = cardList;
     }
 
-    get(numberOfcards){
+    get = (numberOfcards, defaultCard=false) => {
+        if (defaultCard){
+            const newCard = {
+                type: 'defaultCard',
+                value: '',
+                points: 0
+            }
+            return [newCard];
+        }
         const cardList = [];
         for (let i = 0; i < numberOfcards; i++){
             const cardNum = Math.floor(Math.random() * this.numberOfCards);
@@ -19,6 +27,14 @@ const CardService = class {
         }
         return cardList;
     };
+
+    getDefault = () => {
+        const newCard = {
+            type: 'defalut',
+            value: 'default',
+            points: 0
+        }
+    }
 
     getCardsValues = (cardObjectList) => cardObjectList.map(card => card.value);
 

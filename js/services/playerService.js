@@ -29,8 +29,8 @@ const PlayerService = class{
         throw new Error("Points more then 21")
     }
 
-    getCards = (num) => {
-        const cards = this.cardService.get(num);
+    getCards = (numberOfcards) => {
+        const cards = this.cardService.get(numberOfcards);
         this.updateCards(cards);
         this.updatePoints(cards);
     }
