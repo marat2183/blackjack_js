@@ -50,7 +50,7 @@ controller.renderCardSection();
 setTimeout(() => {
     controller.crupierService.getCards(1);
     controller.renderCardSection();
-}, 5000)
+}, 3000)
 
 
 

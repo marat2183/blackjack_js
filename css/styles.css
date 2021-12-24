@@ -8,7 +8,7 @@
 .content {
     min-height: 100vh;
     height: 100%;
-    padding: 50px 0;
+    padding: 100px 0;
     background-color: #11302a;
 }
 
@@ -302,8 +302,18 @@
     background-color: #d2defc;
 }
 
+@media (max-width: 1280px){
+    .content__wrapper{
+        flex-direction: column-reverse;
+    }
+    .content{
+        padding: 50px 0;
+    }
+}
+
 @media (max-width: 768px){
     .content__wrapper{
         flex-direction: column-reverse;
     }
 }
+
