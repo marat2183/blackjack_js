@@ -4,17 +4,20 @@ import DeckService from "../services/deckService.js";
 import cardList from "../constansts.js";
 
 const GameManagerController = class{
-    constructor (gameManagerService, playerCardsSection){
+    constructor (gameManagerService, playerCardsSection, playerCardsPoints){
         this.gameManagerService = gameManagerService;
-        this.playersCardsSection = playerCardsSection
+        this.playerCardsSection = playerCardsSection;
+        this.playerCardsPoints = playerCardsPoints
     }
 
     renderPlayersSection = () => {
         const playerCards = this.gameManagerService.playerService.getPlayerCards();
+        const playerPoints = this.gameManagerService.calculatePlayerPoints(playerCards);
+        console.log(playerPoints)
         const cardsBlock = playerCards.map(card => this.createCard(card));
-        console.log(playerCards)
-        this.playersCardsSection.innerHTML = ''
-        this.playersCardsSection.append(...cardsBlock);
+        this.playerCardsSection.innerHTML = ''
+        this.playerCardsSection.append(...cardsBlock);
+        this.playerCardsPoints.textContent = playerPoints
     }
 
     createCard = (card) => {
@@ -64,12 +67,13 @@ const GameManagerController = class{
 }
 
 const playerCardsSection = document.querySelector('.player__cards--player')
+const playerCardsPoints = document.querySelector('.points__value--player')
 const deckService = new DeckService(cardList)
 const playerService = new PlayerService(deckService)
 const gameManagerService = new GameManagerService(playerService)
 
 
-const gameManagerController = new GameManagerController(gameManagerService, playerCardsSection)
+const gameManagerController = new GameManagerController(gameManagerService, playerCardsSection, playerCardsPoints)
 
 
 gameManagerController.gameManagerService.playerService.getNewCards(2);

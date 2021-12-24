@@ -14,7 +14,6 @@ const DeckService = class {
             resultCardList.push(newCard)
             this.cardList = this.cardList.filter((card) => card !== newCard)
             this.numberOfCards = this.cardList.length;
-            console.log(resultCardList);
         }
         return resultCardList
     }
