@@ -49,7 +49,8 @@ const CardService = class {
         const filteredCardsValues = cardObjectList.filter((card) => card.value !== 'A');
         const filteredCardsPoints = this.getPoints(filteredCardsValues)
         const numOfAces = cardObjectList.length - filteredCardsValues.length
-        let resultSum = filteredCardsPoints.reduce((a,b)=>a+b);
+        
+        let resultSum = filteredCardsPoints.length ? filteredCardsPoints.reduce((a,b)=>a+b) : 0;
         for (let i = 0; i < numOfAces; i++){
             if ((resultSum + 11) <= 21){
                 resultSum = resultSum + 11
