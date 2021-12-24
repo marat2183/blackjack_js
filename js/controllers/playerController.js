@@ -3,13 +3,15 @@ import CardController from "./cardController.js";
 
 
 const PlayerController = class{
-    constructor(hitBtn, standBtn, chips, playerCardsPoints, cardList, playerBet, playerBalance){
+    constructor(hitBtn, standBtn, betBtn, resetBtn, chips, playerCardsPoints, cardList, playerBet, playerBalance){
         this.playerService = new PlayerService();
         this.cardController = new CardController()
         this.playerCardsPoints = playerCardsPoints;
         this.cardList = cardList;
         this.hitBtn = hitBtn;
         this.standBtn = standBtn;
+        this.betBtn = betBtn;
+        this.resetBtn = resetBtn;
         this.playerBet = playerBet;
         this.playerBalance = playerBalance;
         this.chips = chips
@@ -34,7 +36,7 @@ const PlayerController = class{
 
     hitBtnCallback = (event) => {
         this.playerService.getCards(1);
-        this.renderPlayerSection();
+        this.renderCardSection();
     }
 
     standBtnCallBack = (event) => {
@@ -63,13 +65,25 @@ const PlayerController = class{
         const userBetStr = event.currentTarget.textContent.trim();
         const intBet = userBetStr.includes('K') ? Number(userBetStr.replace('K', '000')): Number(userBetStr)
         this.playerService.updateBet(intBet);
-        this.renderPlayerSection()
+        this.renderBetsSection()
     }
 
     //Bets btns 
     addBetsBtnsHandlers = () => {
-        const betBtn = document.querySelector('.bet_button--bet');
-        const resetBtn = document.querySelector('.bet_button--reset');
+        this.betBtn.addEventListener('click', this.betBtnCallback)
+        this.resetBtn.addEventListener('click', this.resetBtnCallback)
+    }
+
+    betBtnCallback = () => {
+        this.betBtn.disabled = true;
+        this.resetBtn.disabled = true;
+    }
+
+    resetBtnCallback = () => this.playerService.resetBet();
+
+    removeBetsBtnsHandlers = () => {
+        this.betBtn.removeEventListener('click', this.betBtnCallback)
+        this.resetBtn.removeEventListener('click', this.resetBtnCallback)
     }
 
     changePlayerSectionView = (cards, points) => {
@@ -90,15 +104,11 @@ const PlayerController = class{
         }
     }
     
-    renderPlayerSection = () => {
+    renderCardSection = () => {
         const cards = this.playerService.getPlayerCards()
         const cardsBlock = cards.map(card => this.cardController.createCard(card));
-        const playerBet = this.playerService.getPlayerBet();
-        const playerBalance = this.playerService.getPlayerBalance();
         this.cardList.innerHTML = ''
         this.cardList.append(...cardsBlock);
-        this.playerBet.textContent = playerBet;
-        this.playerBalance.textContent = playerBalance;
         try{
             const points = this.playerService.getPlayerPoints()
             this.changePlayerSectionView(cards, points)
@@ -107,6 +117,13 @@ const PlayerController = class{
             playerCardsPoints.textContent = 'X';
             this.hidePlayerBtns();
         }
+    }
+
+    renderBetsSection = () => {
+        const playerBet = this.playerService.getPlayerBet();
+        const playerBalance = this.playerService.getPlayerBalance();
+        this.playerBet.textContent = playerBet;
+        this.playerBalance.textContent = playerBalance;
     }
 }
 
@@ -119,11 +136,15 @@ const playerBalance = document.querySelector('.bets__value--balance')
 const hitBtn = document.querySelector('.player__btn--hit');
 const standBtn = document.querySelector('.player__btn--stand');
 const chips = document.querySelectorAll('.chip');
+const betBtn = document.querySelector('.bet_button--bet');
+const resetBtn = document.querySelector('.bet_button--reset');
 
 
 const controller = new PlayerController(
                                         hitBtn, 
-                                        standBtn, 
+                                        standBtn,
+                                        betBtn,
+                                        resetBtn,
                                         chips, 
                                         playerCardsPoints, 
                                         cardList, 
@@ -132,5 +153,10 @@ const controller = new PlayerController(
                                         )
 controller.playerService.getCards(2);
 controller.addChipsBtnsHandlers()
-controller.renderPlayerSection()
+controller.addBetsBtnsHandlers()
+controller.renderCardSection()
+controller.renderBetsSection()
 // controller.removeChipsBtnsHandlers();
+
+
+ 

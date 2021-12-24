@@ -7,7 +7,7 @@ const PlayerService = class{
         this.cardService = new CardService();
         this.points = 0;
         this.bet = 0;
-        this.balance = 1000;
+        this.balance = 10000;
     }
 
     getPlayerCards = () => {
@@ -47,8 +47,10 @@ const PlayerService = class{
     updateBalance = (bet) => this.balance = this.balance - bet;
 
     updateBet = (bet) => {
-        this.bet = this.bet + bet;
-        this.updateBalance(bet)
+        if (this.balance - bet >= 0){
+            this.bet = this.bet + bet;
+            this.updateBalance(bet);
+        }
     }
 
     resetBet(bet){
