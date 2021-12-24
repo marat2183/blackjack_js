@@ -1,68 +1,28 @@
-import CardService from './cardService.js'
+import DeckService from './deckService.js'
+import cardList from '../constansts.js';
 
-
-const PlayerService = class{
-    constructor(){
-        this.hand = [];
-        this.cardService = new CardService();
-        this.points = 0;
-        this.bet = 0;
-        this.balance = 10000;
+const PlayerService = class {
+    constructor(deckService){
+        this.cards = [];
+        this.deckService = deckService;
     }
 
     getPlayerCards = () => {
-        return this.hand;
+        return this.cards;
     }
 
-    getPlayerBalance = () => {
-        return this.balance;
-    }
-
-    getPlayerBet = () => {
-        return this.bet
-    }
-
-    getPlayerPoints = () => {
-        if (this.points <= 21){
-            return this.points
-        }
-        throw new Error("Points more then 21")
-    }
-
-    getCards = (numberOfcards) => {
-        const cards = this.cardService.get(numberOfcards);
+    getNewCards = (numberOfcards) => {
+        const cards = this.deckService.getRandomCard(numberOfcards);
         this.updateCards(cards);
-        this.updatePoints(cards);
     }
     
     updateCards = (cards) => {
-        this.hand = [...this.hand, ...cards]
+        this.cards = [...this.cards, ...cards]
     }
     
-    updatePoints = () => {
-        const updatedPoints = this.cardService.getSumPoints(this.hand)
-        this.points = updatedPoints;
-    }
-
-    updateBalance = (bet) => this.balance = this.balance - bet;
-
-    updateBet = (bet) => {
-        if (this.balance - bet >= 0){
-            this.bet = this.bet + bet;
-            this.updateBalance(bet);
-        }
-    }
-
-    resetBet(bet){
-        this.bet = 0;
-        this.balance = this.balance + bet;
-    }
-
-    resetHand = () => {
-        this.hand = [];
-        this.points = 0;
+    resetCards = () => {
+        this.cards = [];
     }
 }
-
 
 export default PlayerService
