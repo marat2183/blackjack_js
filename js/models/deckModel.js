@@ -5,7 +5,7 @@ const DeckModel = class {
         this.cardList = cardList;
     }
 
-    updateDeck = () => {
+    reset = () => {
         this.cardList = cardList;
     }
 }

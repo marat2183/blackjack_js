@@ -3,13 +3,13 @@ const PlayerModel = class {
         this.cards = [];
     }
 
-    getPlayerCards = () => this.cards;
+    getCards = () => this.cards;
 
     addCards = (cards) => {
         this.cards = [...this.cards, ...cards]
     }
     
-    resetCards = () => {
+    reset = () => {
         this.cards = [];
     }
 }

@@ -4,21 +4,23 @@ import DeckModel from "../models/deckModel.js";
 import cardList from "../constants.js";
 
 const GameManagerController = class{
-    constructor (gameManagerService, playerCardsSection, playerCardsPoints, hitBtn, standBtn){
+    constructor (gameManagerService, playerCardsSection, croupierCardsSection, playerCardsPoints, croupierCardsPoints, hitBtn, standBtn){
         this.gameManagerService = gameManagerService;
-        this.playerCardsSection = playerCardsSection;
-        this.playerCardsPoints = playerCardsPoints;
+        this.playerCards = playerCardsSection;
+        this.croupierCards = croupierCardsSection
+        this.playerPoints = playerCardsPoints;
+        this.croupierPoints = croupierCardsPoints;
         this.hitBtn = hitBtn;
         this.standBtn = standBtn
     }
 
-    renderPlayersSection = () => {
-        const playerCards = this.gameManagerService.getPlayerCards()
+    renderPlayersSection = (player, playerCardsBlock, playerPointsBlock) => {
+        const playerCards = this.gameManagerService.getPlayerCards(player)
         const playerPoints = this.gameManagerService.calculatePlayerPoints(playerCards)
         const cardsBlock = playerCards.map(card => this.#createCard(card));
-        this.playerCardsSection.innerHTML = ''
-        this.playerCardsSection.append(...cardsBlock);
-        this.changePlayerPointsView(playerCards, playerPoints)
+        playerCardsBlock.innerHTML = ''
+        playerCardsBlock.append(...cardsBlock);
+        this.changePlayerPointsView(playerCards, playerPoints, playerPointsBlock)
     }
 
     addPlayerButtons = () => {
@@ -28,9 +30,10 @@ const GameManagerController = class{
     }
 
     removePlayerButtons = () => {
+        this.removeCardsButtonsHandlers();
         this.hitBtn.style.display = 'none';
         this.standBtn.style.display = 'none';
-        this.removeCardsButtonsHandlers();
+        this.getCardsToCroupier();
 
     }
 
@@ -41,12 +44,26 @@ const GameManagerController = class{
 
     hitBtnCallback = () => {
         this.gameManagerService.hitCommand();
-        this.renderPlayersSection();
+        this.renderPlayersSection(
+            this.gameManagerService.player,
+            this.playerCards, 
+            this.playerPoints);
     }
 
     standBtnCallBack = () => {
         this.removePlayerButtons();
-        this.gameManagerService.standCommand();
+    }
+
+    getCardsToCroupier = () => {
+        const croupier = this.gameManagerService.croupier
+        let croupierCards = this.gameManagerService.getPlayerCards(croupier)
+        let croupierPoints = this.gameManagerService.calculatePlayerPoints(croupierCards);
+        while (croupierPoints < 18){
+            this.gameManagerService.standCommand();
+            this.renderPlayersSection(croupier, this.croupierCards, this.croupierPoints)
+            croupierCards = this.gameManagerService.getPlayerCards(croupier)
+            croupierPoints = this.gameManagerService.calculatePlayerPoints(croupierCards);
+        }
     }
 
     removeCardsButtonsHandlers = () => {
@@ -54,24 +71,24 @@ const GameManagerController = class{
         this.standBtn.removeEventListener('click', this.standBtnCallBack);
     }
 
-    changePlayerPointsView = (cards, points) => {
+    changePlayerPointsView = (cards, points, playerPointsBlock) => {
         if (points > 21){
-            this.playerCardsPoints.textContent = "X";
+            playerPointsBlock.textContent = "X";
             this.removePlayerButtons(); 
             return
         }
         if (cards.length >= 2 && points < 21){
-            this.playerCardsPoints.textContent = points;
+            playerPointsBlock.textContent = points;
             this.addPlayerButtons();
             return;
         }
         switch (cards.length){
             case 2:
-                this.playerCardsPoints.textContent = "BJ";
+                playerPointsBlock.textContent = "BJ";
                 this.removePlayerButtons();
                 break;
             default:
-                this.playerCardsPoints.textContent = points;
+                playerPointsBlock.textContent = points;
                 this.removePlayerButtons();
                 break
         }
@@ -126,9 +143,12 @@ const GameManagerController = class{
 
 const playerCardsSection = document.querySelector('.player__cards--player')
 const playerCardsPoints = document.querySelector('.points__value--player')
+const croupierCardsSection = document.querySelector('.player__cards--crupier')
+const croupierCardsPoints = document.querySelector('.points__value--crupier')
 const deckModel = new DeckModel(cardList)
 const playerModel = new PlayerModel()
-const gameManagerService = new GameManagerService(playerModel, deckModel)
+const croupierModel = new PlayerModel()
+const gameManagerService = new GameManagerService(playerModel, deckModel, croupierModel)
 const hitBtn = document.querySelector('.player__btn--hit');
 const standBtn = document.querySelector('.player__btn--stand');
 
@@ -136,12 +156,18 @@ const standBtn = document.querySelector('.player__btn--stand');
 
 const gameManagerController = new GameManagerController(
     gameManagerService, 
-    playerCardsSection, 
-    playerCardsPoints, 
+    playerCardsSection,
+    croupierCardsSection, 
+    playerCardsPoints,
+    croupierCardsPoints,
     hitBtn,
     standBtn
 )
 
 
-gameManagerController.gameManagerService.addCardsToPlayer(2);
-gameManagerController.renderPlayersSection();
+gameManagerController.gameManagerService.addCardsToPlayer(2, gameManagerController.gameManagerService.player);
+gameManagerController.renderPlayersSection(
+    gameManagerController.gameManagerService.player,
+    gameManagerController.playerCards, 
+    gameManagerController.playerPoints
+);
