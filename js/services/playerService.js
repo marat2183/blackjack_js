@@ -1,23 +1,20 @@
-import DeckService from './deckService.js'
-import cardList from '../constansts.js';
-
 const PlayerService = class {
-    constructor(deckService){
+    constructor(){
         this.cards = [];
-        this.deckService = deckService;
+        this.points = 0
     }
 
-    getPlayerCards = () => {
-        return this.cards;
-    }
+    getPlayerCards = () => this.cards;
 
-    getNewCards = (numberOfcards) => {
-        const cards = this.deckService.getRandomCard(numberOfcards);
-        this.updateCards(cards);
-    }
+    getPoints = () => this.points;
+
     
-    updateCards = (cards) => {
+    addCards = (cards) => {
         this.cards = [...this.cards, ...cards]
+    }
+
+    updatePoints = (points) => {
+        this.points = points;
     }
     
     resetCards = () => {

@@ -1,26 +1,16 @@
-import cardList from "../constansts.js";
+import cardList from "../constants.js";
 
 const DeckService = class {
     constructor (cardList){
         this.cardList = cardList;
-        this.numberOfCards = 52;
+        this.numberOfCards = this.cardList.length;
     }
 
-    getRandomCard = (num) => {
-        const resultCardList = []
-        for (let i = 0; i < num; i++){
-            const cardNum = Math.floor(Math.random() * this.numberOfCards);
-            const newCard = this.cardList[cardNum]
-            resultCardList.push(newCard)
-            this.cardList = this.cardList.filter((card) => card !== newCard)
-            this.numberOfCards = this.cardList.length;
-        }
-        return resultCardList
-    }
+    getCardByNumber = (num) => this.cardList[num];
 
     updateDeck = () => {
         this.cardList = cardList;
-        this.numberOfCards = 52;
+        this.numberOfCards = this.cardList.length;
     }
 }
 
