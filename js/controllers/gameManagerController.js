@@ -1,22 +1,20 @@
 import GameManagerService from "../services/gameManagerService.js";
-import PlayerController from "./playerController.js";
-import PlayerService from "../services/playerService.js";
-import DeckService from "../services/deckService.js";
+import PlayerModel from "../models/playerModel.js";
+import DeckModel from "../models/deckModel.js";
 import cardList from "../constants.js";
 
 const GameManagerController = class{
-    constructor (gameManagerService, playerCardsSection, playerCardsPoints, playerController, hitBtn, standBtn){
+    constructor (gameManagerService, playerCardsSection, playerCardsPoints, hitBtn, standBtn){
         this.gameManagerService = gameManagerService;
         this.playerCardsSection = playerCardsSection;
         this.playerCardsPoints = playerCardsPoints;
-        this.playerController = playerController;
         this.hitBtn = hitBtn;
         this.standBtn = standBtn
     }
 
     renderPlayersSection = () => {
         const playerCards = this.gameManagerService.getPlayerCards()
-        const playerPoints = this.gameManagerService.getPlayerPoints()
+        const playerPoints = this.gameManagerService.calculatePlayerPoints(playerCards)
         const cardsBlock = playerCards.map(card => this.#createCard(card));
         this.playerCardsSection.innerHTML = ''
         this.playerCardsSection.append(...cardsBlock);
@@ -62,7 +60,7 @@ const GameManagerController = class{
             this.removePlayerButtons(); 
             return
         }
-        if (cards.length >= 2 && points !== 21){
+        if (cards.length >= 2 && points < 21){
             this.playerCardsPoints.textContent = points;
             this.addPlayerButtons();
             return;
@@ -128,20 +126,18 @@ const GameManagerController = class{
 
 const playerCardsSection = document.querySelector('.player__cards--player')
 const playerCardsPoints = document.querySelector('.points__value--player')
-const deckService = new DeckService(cardList)
-const playerService = new PlayerService(deckService)
-const gameManagerService = new GameManagerService(playerService, deckService)
+const deckModel = new DeckModel(cardList)
+const playerModel = new PlayerModel()
+const gameManagerService = new GameManagerService(playerModel, deckModel)
 const hitBtn = document.querySelector('.player__btn--hit');
 const standBtn = document.querySelector('.player__btn--stand');
 
 
-const playerController = new PlayerController(hitBtn, standBtn);
 
 const gameManagerController = new GameManagerController(
     gameManagerService, 
     playerCardsSection, 
     playerCardsPoints, 
-    playerController,
     hitBtn,
     standBtn
 )
