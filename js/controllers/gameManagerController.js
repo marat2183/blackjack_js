@@ -11,16 +11,16 @@ const GameManagerController = class{
         this.playerPoints = playerCardsPoints;
         this.croupierPoints = croupierCardsPoints;
         this.hitBtn = hitBtn;
-        this.standBtn = standBtn
+        this.standBtn = standBtn;
     }
-
-    renderPlayersSection = (player, playerCardsBlock, playerPointsBlock) => {
+    
+    renderPlayersSection = (player, playerCardsBlock, playerPointsBlock, isCroupier=false) => {
         const playerCards = this.gameManagerService.getPlayerCards(player)
         const playerPoints = this.gameManagerService.calculatePlayerPoints(playerCards)
         const cardsBlock = playerCards.map(card => this.#createCard(card));
         playerCardsBlock.innerHTML = ''
         playerCardsBlock.append(...cardsBlock);
-        this.changePlayerPointsView(playerCards, playerPoints, playerPointsBlock)
+        this.changePlayerPointsView(playerCards, playerPoints, playerPointsBlock, isCroupier)
     }
 
     addPlayerButtons = () => {
@@ -55,14 +55,19 @@ const GameManagerController = class{
     }
 
     getCardsToCroupier = () => {
-        const croupier = this.gameManagerService.croupier
+        let counter = 1;
+        let isEnd = false
+        const croupier = this.gameManagerService.croupier;
         let croupierCards = this.gameManagerService.getPlayerCards(croupier)
         let croupierPoints = this.gameManagerService.calculatePlayerPoints(croupierCards);
-        while (croupierPoints < 18){
-            this.gameManagerService.standCommand();
-            this.renderPlayersSection(croupier, this.croupierCards, this.croupierPoints)
+        while (!isEnd){
+            this.gameManagerService.addCardsToPlayer(1, croupier);
+            this.renderPlayersSection(croupier, this.croupierCards, this.croupierPoints, true)
             croupierCards = this.gameManagerService.getPlayerCards(croupier)
             croupierPoints = this.gameManagerService.calculatePlayerPoints(croupierCards);
+            if (croupierPoints > 18){
+                isEnd = true;
+            }
         }
     }
 
@@ -71,25 +76,33 @@ const GameManagerController = class{
         this.standBtn.removeEventListener('click', this.standBtnCallBack);
     }
 
-    changePlayerPointsView = (cards, points, playerPointsBlock) => {
+    changePlayerPointsView = (cards, points, playerPointsBlock, isCroupier) => {
         if (points > 21){
             playerPointsBlock.textContent = "X";
-            this.removePlayerButtons(); 
+            if (!isCroupier){
+                this.removePlayerButtons(); 
+            }
             return
         }
         if (cards.length >= 2 && points < 21){
             playerPointsBlock.textContent = points;
-            this.addPlayerButtons();
+            if (!isCroupier){
+                this.addPlayerButtons();
+            }
             return;
         }
         switch (cards.length){
             case 2:
                 playerPointsBlock.textContent = "BJ";
-                this.removePlayerButtons();
+                if (!isCroupier){
+                    this.removePlayerButtons();
+                }
                 break;
             default:
                 playerPointsBlock.textContent = points;
-                this.removePlayerButtons();
+                if (!isCroupier){
+                    this.removePlayerButtons();
+                }
                 break
         }
     }
@@ -143,8 +156,8 @@ const GameManagerController = class{
 
 const playerCardsSection = document.querySelector('.player__cards--player')
 const playerCardsPoints = document.querySelector('.points__value--player')
-const croupierCardsSection = document.querySelector('.player__cards--crupier')
-const croupierCardsPoints = document.querySelector('.points__value--crupier')
+const croupierCardsSection = document.querySelector('.player__cards--croupier')
+const croupierCardsPoints = document.querySelector('.points__value--croupier')
 const deckModel = new DeckModel(cardList)
 const playerModel = new PlayerModel()
 const croupierModel = new PlayerModel()
@@ -166,8 +179,15 @@ const gameManagerController = new GameManagerController(
 
 
 gameManagerController.gameManagerService.addCardsToPlayer(2, gameManagerController.gameManagerService.player);
+gameManagerController.gameManagerService.addCardsToPlayer(2, gameManagerController.gameManagerService.croupier);
 gameManagerController.renderPlayersSection(
     gameManagerController.gameManagerService.player,
     gameManagerController.playerCards, 
-    gameManagerController.playerPoints
+    gameManagerController.playerPoints,
+);
+gameManagerController.renderPlayersSection(
+    gameManagerController.gameManagerService.croupier,
+    gameManagerController.croupierCards, 
+    gameManagerController.croupierPoints,
+    true,
 );

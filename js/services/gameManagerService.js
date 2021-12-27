@@ -15,8 +15,6 @@ const GameManagerService = class{
 
     hitCommand = () => this.addCardsToPlayer(1, this.player);
 
-    standCommand = () => this.addCardsToPlayer(1, this.croupier)
-
     calculatePlayerPoints = (cards) => {
         let result = 0;
         const filteredCards = cards.filter((card) => card.value !== "A")
@@ -36,10 +34,10 @@ const GameManagerService = class{
     #getRandomCards = (num) => {
         const resultCardList = []
         for (let i = 0; i < num; i++){
-            const cardNum = Math.floor(Math.random() * this.deck.cardList.length);
-            const newCard = this.deck.cardList[cardNum]
+            const cardNum = Math.floor(Math.random() * this.deck.cards.length);
+            const newCard = this.deck.cards[cardNum]
             resultCardList.push(newCard)
-            this.cardList = this.deck.cardList.filter((card) => card !== newCard)
+            this.cards = this.deck.cards.filter((card) => card !== newCard)
         }
         return resultCardList;
     }
