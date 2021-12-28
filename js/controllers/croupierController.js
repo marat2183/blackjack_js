@@ -7,7 +7,7 @@ const CroupierController = class {
     }
 
     renderSection = () => {
-        const cards = this.gameManagerService.getPlayerCards();
+        const cards = this.gameManagerService.getCroupierCards();
         const points = this.gameManagerService.calculatePlayerPoints(cards);
         const cardsBlock = cards.map(card => this.createCard(card));
         this.cards.innerHTML = ''
@@ -15,14 +15,14 @@ const CroupierController = class {
         this.changePointsView(cards, points)
     }
 
-    getCards = () => {
+    getCards() {
         let isEnd = false
-        let croupierCards = this.gameManagerService.getCroupierCards(croupier)
+        let croupierCards = this.gameManagerService.getCroupierCards()
         let croupierPoints = this.gameManagerService.calculatePlayerPoints(croupierCards);
         while (!isEnd && croupierPoints < 17){
             this.gameManagerService.addCroupierCards(1);
-            this.renderPlayersSection(croupier, this.croupierCards, this.croupierPoints, true)
-            croupierCards = this.gameManagerService.getCroupierCards(croupier)
+            this.renderSection()
+            croupierCards = this.gameManagerService.getCroupierCards()
             croupierPoints = this.gameManagerService.calculatePlayerPoints(croupierCards);
             if (croupierPoints >= 17){
                 isEnd = true;

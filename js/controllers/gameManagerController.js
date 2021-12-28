@@ -7,18 +7,66 @@ import CroupierController from "./croupierController.js";
 
 
 const GameManagerController = class{
-    constructor (gameManagerService, playerController, croupierController){
+    constructor (gameManagerService, playerController, croupierController, hitBtn, standBtn){
         this.gameManagerService = gameManagerService;
         this.playerController = playerController;
         this.croupierController = croupierController;
+        this.hitBtn = hitBtn;
+        this.standBtn = standBtn;
         
     }
     
     startGame = () => {
         this.gameManagerService.addPlayerCards(2);
-        this.playerController.renderSection();
+        const status = this.playerController.renderSection();
+        this.playerRenderHandler(status);
         this.gameManagerService.addCroupierCards(2);
         this.croupierController.renderSection();
+    }
+
+    playerRenderHandler = (status) => {
+        switch (status){
+            case 'delete':
+                this.#removePlayerButtons();
+                break;
+            default:
+                this.#addPlayerButtons();
+                break;
+        }
+    }
+
+    #addCardsButtonsHandlers = () => {
+        this.hitBtn.addEventListener('click', this.#hitBtnCallback);
+        this.standBtn.addEventListener('click', this.#standBtnCallBack);
+    }
+
+    #hitBtnCallback = () => {
+        this.gameManagerService.addPlayerCards(1);
+        const status = this.playerController.renderSection();
+        console.log(status);
+        this.playerRenderHandler(status);
+    }
+
+    #standBtnCallBack = () => {
+        this.#removePlayerButtons();
+        this.croupierController.getCards()
+    }
+
+    #addPlayerButtons = () => {
+        this.hitBtn.style.display = 'inline-block';
+        this.standBtn.style.display = 'inline-block';
+        this.#addCardsButtonsHandlers();
+    }
+
+    #removeCardsButtonsHandlers = () => {
+        this.hitBtn.removeEventListener('click', this.hitBtnCallback);
+        this.standBtn.removeEventListener('click', this.standBtnCallBack);
+    }
+
+    #removePlayerButtons = () => {
+        this.#removeCardsButtonsHandlers();
+        this.hitBtn.style.display = 'none';
+        this.standBtn.style.display = 'none';
     }
 }
 
@@ -38,8 +86,6 @@ const playerController = new PlayerController(
     gameManagerService, 
     playerCardsSection, 
     playerCardsPoints,
-    hitBtn,
-    standBtn
 )
 
 const croupierController = new CroupierController(
@@ -51,7 +97,10 @@ const croupierController = new CroupierController(
 const gameManagerController = new GameManagerController(
     gameManagerService,
     playerController,
-    croupierController 
+    croupierController,
+    hitBtn,
+    standBtn
 )
-console.log(croupierController)
+
+
 gameManagerController.startGame()

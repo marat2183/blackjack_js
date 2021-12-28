@@ -2,19 +2,14 @@ import CroupierController from "./croupierController.js";
 
 const PlayerController = class extends CroupierController {
     
-    constructor(gameManagerService, cardSection, pointsSection, hitBtn, standBtn){
-        super(gameManagerService, cardSection, pointsSection);
-        this.hitBtn = hitBtn;
-        this.standBtn = standBtn;
-    }
-
     renderSection = () => {
         const cards = this.gameManagerService.getPlayerCards();
         const points = this.gameManagerService.calculatePlayerPoints(cards);
         const cardsBlock = cards.map(card => this.createCard(card));
         this.cards.innerHTML = '';
         this.cards.append(...cardsBlock);
-        this.changePointsView(cards, points)
+        const result = this.changePointsView(cards, points)
+        return result
     }
 
     addCardsButtonsHandlers = () => {
@@ -24,13 +19,12 @@ const PlayerController = class extends CroupierController {
 
     hitBtnCallback = () => {
         this.gameManagerService.addPlayerCards(1);
-        this.renderSection(
-            this.gameManagerService.player,
-            this.playerCards, 
-            this.playerPoints);
+        this.renderSection();
     }
 
-    standBtnCallBack = () => this.removePlayerButtons();
+    standBtnCallBack = () => {
+        this.removePlayerButtons();
+    }
 
     addPlayerButtons = () => {
         this.hitBtn.style.display = 'inline-block';
@@ -47,29 +41,24 @@ const PlayerController = class extends CroupierController {
         this.removeCardsButtonsHandlers();
         this.hitBtn.style.display = 'none';
         this.standBtn.style.display = 'none';
-        this.getCards()
     }
 
     changePointsView = (cards, points) => {
         if (points > 21){
             this.points.textContent = "X";
-            this.removePlayerButtons();
-            return;
+            return 'delete';
         }
         if (cards.length >= 2 && points < 21){
             this.points.textContent = points;
-            this.addPlayerButtons();
-            return;
+            return 'add'
         }
         switch (cards.length){
             case 2:
                 this.points.textContent = "BJ";
-                this.removePlayerButtons()
-                break;
+                return 'delete';
             default:
                 this.points.textContent = points;
-                this.removePlayerButtons()
-                break;
+                return 'delete';
         }
     }
 }
