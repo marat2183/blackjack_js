@@ -1,17 +1,18 @@
 const GameManagerService = class{
-    constructor(playerModel, deckModel, croupierModel){
-        this.player = playerModel;
-        this.deck = deckModel;
-        this.croupier = croupierModel
+    constructor(player, deck, croupier){
+        this.player = player;
+        this.deck = deck;
+        this.croupier = croupier;
     }
 
 
-    getPlayerCards = (player) => player.getCards();
+    getPlayerCards = () => this.#getCardsFromPlayer(this.player);
 
-    addCardsToPlayer = (numOfCards, player) => {
-        const newCards = this.#getRandomCards(numOfCards);
-        this.#updatePlayerCards(newCards, player);
-    }
+    getCroupierCards = () => this.#getCardsFromPlayer(this.croupier);
+    
+    addPlayerCards = (numOfCards) => this.#addCardsToPlayer(numOfCards, this.player);
+    
+    addCroupierCards = (numOfCards) => this.#addCardsToPlayer(numOfCards, this.croupier);
 
     calculatePlayerPoints = (cards) => {
         let result = 0;
@@ -27,7 +28,12 @@ const GameManagerService = class{
         return result;
     }
 
-    #updatePlayerCards = (cards, player) => player.addCards(cards, player);
+    #getCardsFromPlayer = player => player.getCards()
+    
+    #addCardsToPlayer = (numOfCards, player) => {
+        const newCards = this.#getRandomCards(numOfCards);
+        player.addCards(newCards);
+    }
 
     #getRandomCards = (num) => {
         const resultCardList = []
