@@ -43,13 +43,11 @@ const GameManagerController = class{
     #hitBtnCallback = () => {
         this.gameManagerService.addPlayerCards(1);
         const status = this.playerController.renderSection();
-        console.log(status);
         this.playerRenderHandler(status);
     }
 
     #standBtnCallBack = () => {
         this.#removePlayerButtons();
-        this.croupierController.getCards()
     }
 
     #addPlayerButtons = () => {
@@ -67,6 +65,7 @@ const GameManagerController = class{
         this.#removeCardsButtonsHandlers();
         this.hitBtn.style.display = 'none';
         this.standBtn.style.display = 'none';
+        this.croupierController.getCards()
     }
 }
 
