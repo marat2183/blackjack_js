@@ -12,37 +12,6 @@ const PlayerController = class extends CroupierController {
         return result
     }
 
-    addCardsButtonsHandlers = () => {
-        this.hitBtn.addEventListener('click', this.hitBtnCallback);
-        this.standBtn.addEventListener('click', this.standBtnCallBack);
-    }
-
-    hitBtnCallback = () => {
-        this.gameManagerService.addPlayerCards(1);
-        this.renderSection();
-    }
-
-    standBtnCallBack = () => {
-        this.removePlayerButtons();
-    }
-
-    addPlayerButtons = () => {
-        this.hitBtn.style.display = 'inline-block';
-        this.standBtn.style.display = 'inline-block';
-        this.addCardsButtonsHandlers();
-    }
-
-    removeCardsButtonsHandlers = () => {
-        this.hitBtn.removeEventListener('click', this.hitBtnCallback);
-        this.standBtn.removeEventListener('click', this.standBtnCallBack);
-    }
-
-    removePlayerButtons = () => {
-        this.removeCardsButtonsHandlers();
-        this.hitBtn.style.display = 'none';
-        this.standBtn.style.display = 'none';
-    }
-
     changePointsView = (cards, points) => {
         if (points > 21){
             this.points.textContent = "X";
