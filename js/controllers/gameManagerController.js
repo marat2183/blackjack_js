@@ -3,6 +3,7 @@ import PlayerModel from "../models/playerModel.js";
 import DeckModel from "../models/deckModel.js";
 import cardList from "../constants.js";
 
+
 const GameManagerController = class{
     constructor (gameManagerService, playerCardsSection, croupierCardsSection, playerCardsPoints, croupierCardsPoints, hitBtn, standBtn){
         this.gameManagerService = gameManagerService;
@@ -20,89 +21,83 @@ const GameManagerController = class{
         const cardsBlock = playerCards.map(card => this.#createCard(card));
         playerCardsBlock.innerHTML = ''
         playerCardsBlock.append(...cardsBlock);
-        this.changePlayerPointsView(playerCards, playerPoints, playerPointsBlock, isCroupier)
+        this.#changePlayerPointsView(playerCards, playerPoints, playerPointsBlock, isCroupier)
     }
 
-    addPlayerButtons = () => {
-        this.hitBtn.style.display = 'inline-block';
-        this.standBtn.style.display = 'inline-block';
-        this.addCardsButtonsHandlers();
+    getCardsToCroupier = () => {
+        const croupier = this.gameManagerService.croupier;
+        let isEnd = false
+        let croupierCards = this.gameManagerService.getPlayerCards(croupier)
+        let croupierPoints = this.gameManagerService.calculatePlayerPoints(croupierCards);
+        while (!isEnd && croupierPoints < 17){
+            this.gameManagerService.addCardsToPlayer(1, croupier);
+            this.renderPlayersSection(croupier, this.croupierCards, this.croupierPoints, true)
+            croupierCards = this.gameManagerService.getPlayerCards(croupier)
+            croupierPoints = this.gameManagerService.calculatePlayerPoints(croupierCards);
+            if (croupierPoints >= 17){
+                isEnd = true;
+            }
+        }
     }
 
-    removePlayerButtons = () => {
-        this.removeCardsButtonsHandlers();
-        this.hitBtn.style.display = 'none';
-        this.standBtn.style.display = 'none';
-        this.getCardsToCroupier();
-
+    #addCardsButtonsHandlers = () => {
+        this.hitBtn.addEventListener('click', this.#hitBtnCallback);
+        this.standBtn.addEventListener('click', this.#standBtnCallBack);
     }
 
-    addCardsButtonsHandlers = () => {
-        this.hitBtn.addEventListener('click', this.hitBtnCallback);
-        this.standBtn.addEventListener('click', this.standBtnCallBack);
-    }
-
-    hitBtnCallback = () => {
-        this.gameManagerService.hitCommand();
+    #hitBtnCallback = () => {
+        this.gameManagerService.addCardsToPlayer(1, this.gameManagerService.player);
         this.renderPlayersSection(
             this.gameManagerService.player,
             this.playerCards, 
             this.playerPoints);
     }
 
-    standBtnCallBack = () => {
-        this.removePlayerButtons();
+    #standBtnCallBack = () => this.#removePlayerButtons();
+
+    #addPlayerButtons = () => {
+        this.hitBtn.style.display = 'inline-block';
+        this.standBtn.style.display = 'inline-block';
+        this.#addCardsButtonsHandlers();
     }
 
-    getCardsToCroupier = () => {
-        let counter = 1;
-        let isEnd = false
-        const croupier = this.gameManagerService.croupier;
-        let croupierCards = this.gameManagerService.getPlayerCards(croupier)
-        let croupierPoints = this.gameManagerService.calculatePlayerPoints(croupierCards);
-        while (!isEnd){
-            this.gameManagerService.addCardsToPlayer(1, croupier);
-            this.renderPlayersSection(croupier, this.croupierCards, this.croupierPoints, true)
-            croupierCards = this.gameManagerService.getPlayerCards(croupier)
-            croupierPoints = this.gameManagerService.calculatePlayerPoints(croupierCards);
-            if (croupierPoints > 18){
-                isEnd = true;
-            }
+    #removeCardsButtonsHandlers = () => {
+        this.hitBtn.removeEventListener('click', this.#hitBtnCallback);
+        this.standBtn.removeEventListener('click', this.#standBtnCallBack);
+    }
+
+    #removePlayerButtons = () => {
+        this.#removeCardsButtonsHandlers();
+        this.hitBtn.style.display = 'none';
+        this.standBtn.style.display = 'none';
+        this.getCardsToCroupier();
+
+    }
+
+    #changeCardsButtonsState = (isCroupier, callBack) => {
+        if (!isCroupier){
+            callBack();
         }
     }
-
-    removeCardsButtonsHandlers = () => {
-        this.hitBtn.removeEventListener('click', this.hitBtnCallback);
-        this.standBtn.removeEventListener('click', this.standBtnCallBack);
-    }
-
-    changePlayerPointsView = (cards, points, playerPointsBlock, isCroupier) => {
+    #changePlayerPointsView = (cards, points, playerPointsBlock, isCroupier) => {
         if (points > 21){
             playerPointsBlock.textContent = "X";
-            if (!isCroupier){
-                this.removePlayerButtons(); 
-            }
+            this.#changeCardsButtonsState(isCroupier, this.#removePlayerButtons)
             return
         }
         if (cards.length >= 2 && points < 21){
             playerPointsBlock.textContent = points;
-            if (!isCroupier){
-                this.addPlayerButtons();
-            }
+            this.#changeCardsButtonsState(isCroupier, this.#addPlayerButtons)
             return;
         }
         switch (cards.length){
             case 2:
                 playerPointsBlock.textContent = "BJ";
-                if (!isCroupier){
-                    this.removePlayerButtons();
-                }
+                this.#changeCardsButtonsState(isCroupier, this.#removePlayerButtons)
                 break;
             default:
                 playerPointsBlock.textContent = points;
-                if (!isCroupier){
-                    this.removePlayerButtons();
-                }
+                this.#changeCardsButtonsState(isCroupier, this.#removePlayerButtons)
                 break
         }
     }

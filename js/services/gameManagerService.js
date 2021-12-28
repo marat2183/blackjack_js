@@ -13,8 +13,6 @@ const GameManagerService = class{
         this.#updatePlayerCards(newCards, player);
     }
 
-    hitCommand = () => this.addCardsToPlayer(1, this.player);
-
     calculatePlayerPoints = (cards) => {
         let result = 0;
         const filteredCards = cards.filter((card) => card.value !== "A")
