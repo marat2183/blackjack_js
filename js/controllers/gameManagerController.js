@@ -17,6 +17,7 @@ const GameManagerController = class{
     }
     
     startGame = () => {
+        this.gameManagerService.deck.shuffle();
         this.gameManagerService.addPlayerCards(2);
         const status = this.playerController.renderSection();
         this.playerRenderHandler(status);

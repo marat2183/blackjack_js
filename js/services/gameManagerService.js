@@ -5,7 +5,6 @@ const GameManagerService = class{
         this.croupier = croupier;
     }
 
-
     getPlayerCards = () => this.#getCardsFromPlayer(this.player);
 
     getCroupierCards = () => this.#getCardsFromPlayer(this.croupier);
@@ -31,17 +30,20 @@ const GameManagerService = class{
     #getCardsFromPlayer = player => player.getCards()
     
     #addCardsToPlayer = (numOfCards, player) => {
-        const newCards = this.#getRandomCards(numOfCards);
+        const newCards = this.#getCardsFromDeck(numOfCards);
         player.addCards(newCards);
     }
 
-    #getRandomCards = (num) => {
+    #getCardsFromDeck = (num) => {
         const resultCardList = []
         for (let i = 0; i < num; i++){
-            const cardNum = Math.floor(Math.random() * this.deck.cards.length);
+            if (this.deck.cards.length === 0){
+                this.deck.reset();
+            }
+            const cardNum = this.deck.cards.length - 1;
             const newCard = this.deck.cards[cardNum]
             resultCardList.push(newCard)
-            this.cards = this.deck.cards.filter((card) => card !== newCard)
+            this.deck.removeCard();
         }
         return resultCardList;
     }
