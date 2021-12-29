@@ -114,17 +114,20 @@ const GameManagerController = class{
     startGame = () => {
         this.gameManagerService.deck.shuffle();
         this.gameManagerService.addPlayerCards(2);
-        const status = this.playerController.renderSection();
-        this.playerRenderHandler(status);
+        const playerStatus = this.playerController.renderSection();
+        this.playerRenderHandler(playerStatus);
         this.gameManagerService.addCroupierCards(2);
-        this.croupierController.renderSection();
+        const croupierStatus = this.croupierController.renderSection();
+        console.log(croupierStatus)
+        if (typeof croupierStatus !== 'undefined'){
+            this.playerRenderHandler(croupierStatus);
+        }
         this.chooseWinner();
         this.renderBetsSection();
     }
 
     endGame = () => {
         this.#removePlayerButtons();
-        this.croupierController.getCards()
         this.chooseWinnerAfterEnd();
         this.renderBetsSection();
         this.bet.textContent = 0;
@@ -133,7 +136,11 @@ const GameManagerController = class{
 
     playerRenderHandler = (status) => {
         switch (status){
+            case 'endGame':
+                this.endGame();
+                break;
             case 'delete':
+                this.croupierController.getCards()
                 this.endGame()
                 break;
             default:
