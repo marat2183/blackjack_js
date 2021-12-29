@@ -7,6 +7,28 @@ const GameManagerService = class{
 
     getPlayerCards = () => this.#getCardsFromPlayer(this.player);
 
+    getPlayerBet = () => this.player.getBet();
+
+    getPlayerBalance = () => this.player.getBalance();
+
+    updatePlayerBalance = (balance) => {
+        this.player.updateBalance(balance);
+        console.log(balance);
+    }
+
+    addPlayerBet = (bet) => {
+        const currentBalance = this.getPlayerBalance();
+        this.player.addBet(bet);
+        this.updatePlayerBalance(currentBalance - bet);
+    }
+
+    resetPlayerBet = () => {
+        const currentBalance = this.getPlayerBalance();
+        const currentBet = this.getPlayerBet()
+        this.player.resetBet();
+        this.updatePlayerBalance(currentBalance + currentBet)
+    }
+
     getCroupierCards = () => this.#getCardsFromPlayer(this.croupier);
     
     addPlayerCards = (numOfCards) => this.#addCardsToPlayer(numOfCards, this.player);
