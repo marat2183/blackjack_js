@@ -75,20 +75,24 @@ const GameManagerController = class{
         const croupierCards = this.gameManagerService.getCroupierCards();
         const playerPoints = this.gameManagerService.calculatePlayerPoints(playerCards);
         const croupierPoints = this.gameManagerService.calculatePlayerPoints(croupierCards);
-        if (playerPoints > 21 && croupierPoints > 21){
+        const playerWinCondition = playerPoints <= 21;
+        const playerLoseCondition = playerPoints > 21;
+        const croupierWinCondition = croupierPoints <= 21;
+        const croupierLoseCondition = croupierPoints > 21;
+        if (playerLoseCondition && croupierLoseCondition){
             this.WinFunctionHandler('draw');
         }
-        else if (playerPoints <= 21 && croupierPoints <= 21){
+        else if (playerWinCondition && croupierWinCondition){
             if (playerPoints < croupierPoints){
                 this.WinFunctionHandler('croupier');
                 return;
             }
             this.WinFunctionHandler('player');
         }
-        else if (playerPoints > 21 && croupierPoints <= 21){
+        else if (playerLoseCondition && croupierWinCondition){
             this.WinFunctionHandler('croupier');
         }
-        else if (croupierPoints > 21 && playerPoints <= 21){
+        else if (croupierLoseCondition && playerWinCondition){
             this.WinFunctionHandler('player');
         }
     }
