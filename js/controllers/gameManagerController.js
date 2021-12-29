@@ -43,7 +43,6 @@ const GameManagerController = class{
                 break;
             case 'croupier':
                 console.log("Croupier win");
-                this.gameManagerService.updatePlayerBalance(playerBalance - playerBet);
                 break;
             case 'draw':
                 console.log('Draw');
