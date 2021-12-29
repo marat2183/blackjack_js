@@ -32,9 +32,28 @@ const GameManagerController = class{
         this.bet = bet;
     }
 
+
+    WinFunctionHandler = (result) => {
+        const playerBalance =  this.gameManagerService.getPlayerBalance();
+        const playerBet = this.gameManagerService.getPlayerBet();
+        switch (result){
+            case 'player':
+                console.log("Player win");
+                this.gameManagerService.updatePlayerBalance(playerBalance + 1.5 * playerBet);
+                break;
+            case 'croupier':
+                console.log("Croupier win");
+                this.gameManagerService.updatePlayerBalance(playerBalance - playerBet);
+                break;
+            case 'draw':
+                console.log('Draw');
+                this.gameManagerService.updatePlayerBalance(playerBalance + playerBet);
+                break;
+        }
+        this.renderBetsSection();
+    }
+
     chooseWinner = () => {
-        const playerBalance = this.balance;
-        const playerBet = this.bet;
         const playerCards = this.gameManagerService.getPlayerCards();
         const croupierCards = this.gameManagerService.getCroupierCards();
         const playerPoints = this.gameManagerService.calculatePlayerPoints(playerCards);
@@ -42,47 +61,36 @@ const GameManagerController = class{
         const initialPlayerWinCondition = playerPoints === 21 && playerCards.length == 2;
         const initialCroupierWinCondition = croupierPoints === 21 && croupierCards.length == 2;
         if (initialPlayerWinCondition){
-            console.log("Player win");
-            this.gameManagerService.updatePlayerBalance(playerBalance + 1.5 * playerBet);
+            this.WinFunctionHandler('player');
         }
         else if (initialCroupierWinCondition){
-            console.log('Croupier Win');
-            this.gameManagerService.updatePlayerBalance(playerBalance - playerBet);
+            this.WinFunctionHandler('croupier');
         }
         else if (initialCroupierWinCondition && initialPlayerWinCondition){
-            console.log("Draw");
-            this.gameManagerService.updatePlayerBalance(playerBalance + playerBet);
+            this.WinFunctionHandler('draw');
         }
     }
 
     chooseWinnerAfterEnd = () => {
-        const playerBalance =  this.gameManagerService.getPlayerBalance();
-        const playerBet = this.gameManagerService.getPlayerBet();
         const playerCards = this.gameManagerService.getPlayerCards();
         const croupierCards = this.gameManagerService.getCroupierCards();
         const playerPoints = this.gameManagerService.calculatePlayerPoints(playerCards);
         const croupierPoints = this.gameManagerService.calculatePlayerPoints(croupierCards);
         if (playerPoints > 21 && croupierPoints > 21){
-            console.log("Draw");
-            this.gameManagerService.updatePlayerBalance(playerBalance + playerBet);
+            this.WinFunctionHandler('draw');
         }
         else if (playerPoints <= 21 && croupierPoints <= 21){
-            playerPoints < croupierPoints ? () => {
-                console.log("Croupier Win");
-                this.gameManagerService.updatePlayerBalance(playerBalance - playerBet);
-            } : 
-            () => {
-                console.log("Player Win");
-                this.gameManagerService.updatePlayerBalance(playerBalance + 1.5 * playerBet)
+            if (playerPoints < croupierPoints){
+                this.WinFunctionHandler('croupier');
+                return;
             }
+            this.WinFunctionHandler('player');
         }
         else if (playerPoints > 21 && croupierPoints <= 21){
-            console.log("Croupier Win");
-            this.gameManagerService.updatePlayerBalance(playerBalance - playerBet);
+            this.WinFunctionHandler('croupier');
         }
         else if (croupierPoints > 21 && playerPoints <= 21){
-            console.log("Player Win");
-            this.gameManagerService.updatePlayerBalance(playerBalance + 1.5 * playerBet);
+            this.WinFunctionHandler('player');
         }
     }
 
