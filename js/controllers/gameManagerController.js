@@ -32,45 +32,26 @@ const GameManagerController = class{
         this.bet = bet;
     }
 
-
     WinFunctionHandler = (result) => {
         const playerBalance =  this.gameManagerService.getPlayerBalance();
         const playerBet = this.gameManagerService.getPlayerBet();
         switch (result){
             case 'player':
-                console.log("Player win");
                 this.gameManagerService.updatePlayerBalance(playerBalance + 1.5 * playerBet);
+                console.log("Player win");
                 break;
             case 'croupier':
                 console.log("Croupier win");
                 break;
             case 'draw':
-                console.log('Draw');
                 this.gameManagerService.updatePlayerBalance(playerBalance + playerBet);
+                console.log('Draw');
                 break;
         }
         this.renderBetsSection();
     }
 
     chooseWinner = () => {
-        const playerCards = this.gameManagerService.getPlayerCards();
-        const croupierCards = this.gameManagerService.getCroupierCards();
-        const playerPoints = this.gameManagerService.calculatePlayerPoints(playerCards);
-        const croupierPoints = this.gameManagerService.calculatePlayerPoints(croupierCards);
-        const initialPlayerWinCondition = playerPoints === 21 && playerCards.length == 2;
-        const initialCroupierWinCondition = croupierPoints === 21 && croupierCards.length == 2;
-        if (initialPlayerWinCondition){
-            this.WinFunctionHandler('player');
-        }
-        else if (initialCroupierWinCondition){
-            this.WinFunctionHandler('croupier');
-        }
-        else if (initialCroupierWinCondition && initialPlayerWinCondition){
-            this.WinFunctionHandler('draw');
-        }
-    }
-
-    chooseWinnerAfterEnd = () => {
         const playerCards = this.gameManagerService.getPlayerCards();
         const croupierCards = this.gameManagerService.getCroupierCards();
         const playerPoints = this.gameManagerService.calculatePlayerPoints(playerCards);
@@ -85,9 +66,13 @@ const GameManagerController = class{
         else if (playerWinCondition && croupierWinCondition){
             if (playerPoints < croupierPoints){
                 this.WinFunctionHandler('croupier');
-                return;
             }
-            this.WinFunctionHandler('player');
+            else if (croupierPoints < playerPoints){
+                this.WinFunctionHandler('player');
+            }
+            else{
+                this.WinFunctionHandler('draw');
+            }
         }
         else if (playerLoseCondition && croupierWinCondition){
             this.WinFunctionHandler('croupier');
@@ -97,13 +82,14 @@ const GameManagerController = class{
         }
     }
 
-    betAccepting = () => {
+
+    startBetsAccepting = () => {
         this.#activateBetButtons();
         this.#activateChipsButtons();
         this.renderBetsSection();
     }
 
-    endBetAccepting = () => {
+    endBetsAccepting = () => {
         this.#disableBetButtons();
         this.#disableChipsButtons();
         setTimeout(() => {
@@ -114,39 +100,35 @@ const GameManagerController = class{
     startGame = () => {
         this.gameManagerService.deck.shuffle();
         this.gameManagerService.addPlayerCards(2);
-        const playerStatus = this.playerController.renderSection();
-        this.playerRenderHandler(playerStatus);
+        this.playerController.renderSection();
         this.gameManagerService.addCroupierCards(2);
-        const croupierStatus = this.croupierController.renderSection();
-        console.log(croupierStatus)
-        if (typeof croupierStatus !== 'undefined'){
-            this.playerRenderHandler(croupierStatus);
+        this.croupierController.renderSection();
+        const playerState = this.playerController.getState();
+        const croupierState = this.croupierController.getState();
+        if (!playerState.needCard || !croupierState.needCard){
+            this.endGame();
+            return;
         }
-        this.chooseWinner();
-        this.renderBetsSection();
+        this.gameLoop();
     }
 
     endGame = () => {
-        this.#removePlayerButtons();
-        this.chooseWinnerAfterEnd();
+        console.log("GAME END!");
+        this.chooseWinner();
         this.renderBetsSection();
         this.bet.textContent = 0;
-
     }
 
-    playerRenderHandler = (status) => {
-        switch (status){
-            case 'endGame':
-                this.endGame();
-                break;
-            case 'delete':
-                this.croupierController.getCards()
-                this.endGame()
-                break;
-            default:
-                this.#addPlayerButtons();
-                break;
+    gameLoop = () => {
+        const playerState = this.playerController.getState();
+        if (playerState.needCard){
+            this.#addPlayerButtons();
+            return;
         }
+        this.#removePlayerButtons();
+        this.croupierController.emulateGame()
+        this.endGame();
+        return;
     }
     
     renderBetsSection = () => {
@@ -154,6 +136,7 @@ const GameManagerController = class{
         const bet = this.gameManagerService.getPlayerBet();
         this.balance.textContent = balance;
         this.bet.textContent = bet;
+        return;
     }
 
     #activateChipsButtons = () => this.chips.addEventListener('click', this.#chipsButtonsCallback);
@@ -182,7 +165,9 @@ const GameManagerController = class{
         this.resetBtn.removeEventListener('click', this.#resetBtnCallBack);
     }
 
-    #betBtnCallBack = () => this.endBetAccepting()
+    #betBtnCallBack = () => {
+        this.endBetsAccepting();
+    }
 
     #resetBtnCallBack = () => {
         this.gameManagerService.resetPlayerBet();
@@ -220,12 +205,14 @@ const GameManagerController = class{
 
     #hitBtnCallback = () => {
         this.gameManagerService.addPlayerCards(1);
-        const status = this.playerController.renderSection();
-        this.playerRenderHandler(status);
+        this.playerController.renderSection();
+        this.gameLoop();
     }
 
     #standBtnCallBack = () => {
-        this.endGame();
+        this.playerController.renderSection();
+        this.playerController.setState({'needCard': false});
+        this.gameLoop();
     }
 
     #addPlayerButtons = () => {
@@ -288,5 +275,5 @@ const gameManagerController = new GameManagerController(
     bet
 )
 
-gameManagerController.betAccepting()
-// gameManagerController.startGame();
+gameManagerController.startBetsAccepting()
+

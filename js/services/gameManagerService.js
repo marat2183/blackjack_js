@@ -13,7 +13,6 @@ const GameManagerService = class{
 
     updatePlayerBalance = (balance) => {
         this.player.updateBalance(balance);
-        console.log(balance);
     }
 
     addPlayerBet = (bet) => {

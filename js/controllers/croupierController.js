@@ -4,6 +4,18 @@ const CroupierController = class {
         this.gameManagerService = gameManagerService;
         this.cards = cardSection;
         this.points = pointsSection;
+        this.state = {
+            'needCard': false,
+        }
+    }
+
+    getState = () => this.state;
+
+    setState = (obj) => {
+        this.state = {
+            ...this.state,
+            ...obj
+        }
     }
 
     renderSection = () => {
@@ -12,8 +24,19 @@ const CroupierController = class {
         const cardsBlock = cards.map(card => this.createCard(card));
         this.cards.innerHTML = ''
         this.cards.append(...cardsBlock);
-        const result = this.changePointsView(cards, points)
-        return result
+        this.changePointsView(cards, points)
+    }
+
+    emulateGame = () => {
+        let croupierCards = this.gameManagerService.getCroupierCards()
+        let croupierPoints = this.gameManagerService.calculatePlayerPoints(croupierCards);
+        if (croupierPoints === 21){
+            this.setState({'needCard': false})
+            return;
+        }
+        this.setState({'needCard': true})
+        this.getCards();
+        return;
     }
 
     getCards() {
@@ -29,23 +52,28 @@ const CroupierController = class {
                 isEnd = true;
             }
         }
+        this.setState({'needCard': false});
     }
 
     changePointsView = (cards, points) => {
         if (points > 21){
             this.points.textContent = "X";
-            return;
-        }
-        if (cards.length >= 2 && points < 21){
-            this.points.textContent = points;
+            this.setState({'needCard': false})
             return;
         }
         switch (cards.length){
             case 2:
-                this.points.textContent = "BJ";
-                return 'endGame';
+                if (points === 21){
+                    this.points.textContent = "BJ";
+                    this.setState({'needCard': false});
+                    return;
+                }
+                this.points.textContent = points;
+                this.setState({'needCard': true});
+                return;
             default:
                 this.points.textContent = points;
+                points < 21 ? this.setState({'needCard': true}) : this.setState({'needCard': false});
                 return;
         }
     }

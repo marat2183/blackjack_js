@@ -5,7 +5,7 @@ const PlayerModel = class extends CroupierModel{
     constructor(){
         super();
         this.bet = 0;
-        this.balance = 10000
+        this.balance = 10000;
     }
 
 
