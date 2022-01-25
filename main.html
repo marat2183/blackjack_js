@@ -14,17 +14,15 @@
     <section class="content">
         <div class="content__wrapper">
             <div class="player-table">
-                <div class="player player--crupier">
+                <div class="player player--croupier">
                     <h1 class="player__title">
-                        Crupier
+                        Croupier
                     </h1>
                     <img src="./img/croupier.svg" alt="" class="player__img">
                     <div class="points">
-                        <span class="points__value points__value--crupier">0</span>
+                        <span class="points__value points__value--croupier"></span>
                     </div>
-                    <div class="player__cards player__cards--crupier">
-                        <div class="card card--default">
-                        </div>
+                    <div class="player__cards player__cards--croupier">
                     </div>
                 </div>
                 <div class="player">
@@ -74,14 +72,14 @@
                     <h1 class="bets__title">Balance: <span class="bets__value bets__value--balance">0</span></h1>
                     <h1 class="bets__title">Bet: <span class="bets__value bets__value--bet">0</span></h1>
                     <div class="bets__buttons">
-                        <button class="bet_button bet_button--bet">Bet</button>
-                        <button class="bet_button bet_button--reset">Reset</button>
+                        <button class="bet_button bet_button--bet" disabled>Bet</button>
+                        <button class="bet_button bet_button--reset" disabled>Reset</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <script type="module" src="./js/controllers/playerController.js"></script>
-    <script type="module" src="./js/controllers/crupierController.js"></script>
+    <script type="module" src="./js/controllers/gameManagerController.js"></script>
+    <!-- <script type="module" src="./js/controllers/crupierController.js"></script> -->
 </body>
 </html>
