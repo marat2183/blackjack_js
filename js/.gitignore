@@ -79,6 +79,7 @@ jspm_packages/
 
 # dotenv environment variables file
 .env
+node_modules
 
 # next.js build output
 .next
